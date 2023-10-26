@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Role]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+	[Name] nvarchar(100) NOT NULL,
+	CONSTRAINT [UQ_Role_Name] UNIQUE([Name])
+)

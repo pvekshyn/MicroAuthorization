@@ -1,0 +1,52 @@
+{
+  "ReverseProxy": {
+    "Routes": {
+      "permissionroute": {
+        "ClusterId": "authorizationcluster",
+        "AuthorizationPolicy": "default",
+        "Match": {
+          "Path": "/role-api/permission/{**catch-all}"
+        },
+        "MetaData": {
+          "PermissionId": "785027B3-FB55-4F92-860E-5EDF5B14BBF5"
+        }
+      },
+      "roleroute": {
+        "ClusterId": "authorizationcluster",
+        "AuthorizationPolicy": "default",
+        "Match": {
+          "Path": "/role-api/role/{**catch-all}"
+        },
+        "MetaData": {
+          "PermissionId": "9eb8e349-87a3-4698-9380-44162ae88606"
+        }
+      },
+      "assignroute": {
+        "ClusterId": "authorizationcluster",
+        "AuthorizationPolicy": "default",
+        "Match": {
+          "Path": "/assignment-api/{**catch-all}"
+        },
+        "MetaData": {
+          "PermissionId": "dc879520-c6d1-4baa-acff-65785fdb4c9a"
+        }
+      },
+      "accessroute": {
+        "ClusterId": "authorizationcluster",
+        "AuthorizationPolicy": "default",
+        "Match": {
+          "Path": "/access-api/{**catch-all}"
+        }
+      }
+    },
+    "Clusters": {
+      "authorizationcluster": {
+        "Destinations": {
+          "destination1": {
+            "Address": "http://localhost:8080"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+name: authorization
+services:
+
+- name: identity-server
+  project: IdentityServer/IdentityServer/IdentityServer.csproj
+  bindings:
+    - port: 5001
+
+- name: role-api
+  project: Authorization/Roles/Roles.csproj
+  replicas: 2
+
+- name: assignment-api
+  project: Authorization/Assignments/Assignments.csproj
+  replicas: 2
+
+- name: access-api
+  project: Authorization/Access/Access.csproj
+  replicas: 3
+
+- name: authorization-event-handler
+  project: Authorization/Authorization.EventHandler/Authorization.EventHandler.csproj
+  replicas: 2
+
+- name: user-api
+  project: User/User/Users.csproj
+  replicas: 2
+
+- name: authorization-api-gateway
+  project: ApiGateway/ApiGateway/ApiGateway.csproj
+  bindings:
+    - port: 8081
+  env:
+  - name: GatewayConfig
+    value: authorization.config.json
+
+- name: user-api-gateway
+  project: ApiGateway/ApiGateway/ApiGateway.csproj
+  bindings:
+    - port: 8082
+  env:
+  - name: GatewayConfig
+    value: users.config.json
+
+ingress:
+  - name: authorization-ingress
+    bindings:
+      - port: 8080
+    rules:
+      - path: /role-api
+        service: role-api
+      - path: /assignment-api
+        service: assignment-api
+      - path: /access-api
+        service: access-api
+
+  - name: user-ingress
+    bindings:
+      - port: 8088
+    rules:
+      - path: /user-api
+        service: user-api

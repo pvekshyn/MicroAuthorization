@@ -1,0 +1,25 @@
+{
+  "ReverseProxy": {
+    "Routes": {
+      "userroute": {
+        "ClusterId": "usercluster",
+        "AuthorizationPolicy": "default",
+        "Match": {
+          "Path": "{**catch-all}"
+        },
+        "MetaData": {
+          "PermissionId": "3707ee85-343d-4f2a-a856-1be689ea9cb4"
+        }
+      }
+    },
+    "Clusters": {
+      "usercluster": {
+        "Destinations": {
+          "destination1": {
+            "Address": "http://localhost:8088"
+          }
+        }
+      }
+    }
+  }
+}
